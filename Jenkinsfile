@@ -1,14 +1,14 @@
 pipeline {
-    agent any  // run on any available agent
+    agent any
 
     environment {
-        MVN_HOME = '/usr/share/maven' // Adjust to your Maven path
+        MVN_HOME = '/usr/share/maven' // Adjust if needed
     }
 
     stages {
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/spring-projects/spring-petclinic.git'
+                git url: 'https://github.com/your-username/spring-petclinic.git'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Archive Artifact') {
+        stage('Archive JAR') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
@@ -33,10 +33,10 @@ pipeline {
 
     post {
         success {
-            echo 'Build finished successfully!'
+            echo '✅ Build and test passed!'
         }
         failure {
-            echo 'Build failed!'
+            echo '❌ Build failed. Check logs.'
         }
     }
 }
